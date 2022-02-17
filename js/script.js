@@ -3,7 +3,21 @@ function getInput(ExpenseItem) {
     const expenseInput = document.getElementById(ExpenseItem + '-expense');
     const expenseInputText = expenseInput.value;
     const expenseAmount = parseFloat(expenseInputText);
-    return expenseAmount;
+
+    const stringError = document.getElementById('string-error');
+    const negativeNumberError = document.getElementById('negative-number-error');
+    if (isNaN(expenseInputText)) {
+        stringError.style.display = 'block';
+        negativeNumberError.style.display = 'none';
+
+    }
+    else if (expenseInputText < 0) {
+        negativeNumberError.style.display = 'block';
+        stringError.style.display = 'none';
+    }
+    else {
+        return expenseAmount;
+    }
 }
 // calculate total expenses
 function calculateExpenses() {
