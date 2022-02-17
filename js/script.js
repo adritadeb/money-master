@@ -3,21 +3,7 @@ function getInput(ExpenseItem) {
     const expenseInput = document.getElementById(ExpenseItem + '-expense');
     const expenseInputText = expenseInput.value;
     const expenseAmount = parseFloat(expenseInputText);
-
-    const stringError = document.getElementById('string-error');
-    const negativeNumberError = document.getElementById('negative-number-error');
-    if (isNaN(expenseInputText)) {
-        stringError.style.display = 'block';
-        negativeNumberError.style.display = 'none';
-
-    }
-    else if (expenseInputText < 0) {
-        negativeNumberError.style.display = 'block';
-        stringError.style.display = 'none';
-    }
-    else {
-        return expenseAmount;
-    }
+    return expenseAmount;
 }
 // calculate total expenses
 function calculateExpenses() {
@@ -38,11 +24,34 @@ function calculateBalance() {
     const totalExpensesAmount = totalExpenses.innerText;
 
     const totalBalance = document.getElementById('total-balance');
-
     totalBalance.innerText = incomeAmount - totalExpensesAmount;
+}
+//calculate savings
+function calculateSavings() {
+    const incomeInput = document.getElementById('income-input');
+    const incomeInputText = incomeInput.value;
+    const incomeAmount = parseFloat(incomeInputText);
+
+    const saveInput = document.getElementById('save-input');
+    let saveInputText = saveInput.value;
+    const saveAmount = parseFloat(saveInputText);
+
+    const savingAmount = document.getElementById('saving-amount');
+    savingAmount.innerText = (incomeAmount * saveAmount) / 100;
+
+    saveInputText = savingAmount.innerText;
+    //calculate remaining balance
+    const remainingBalance = document.getElementById('remaining-balance');
+    const totalBalance = document.getElementById('total-balance');
+    const totalBalanceText = totalBalance.innerText;
+    const totalBalanceAmount = parseFloat(totalBalanceText);
+    remainingBalance.innerText = totalBalanceAmount - saveInputText;
 }
 
 document.getElementById('calculate-button').addEventListener('click', function () {
     calculateExpenses();
     calculateBalance();
+})
+document.getElementById('save-button').addEventListener('click', function () {
+    calculateSavings();
 })
