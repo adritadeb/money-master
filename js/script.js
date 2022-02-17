@@ -1,55 +1,56 @@
-// expense items
-function getInput(ExpenseItem) {
-    // expense input
-    const expenseInput = document.getElementById(ExpenseItem + '-expense');
-    const expenseInputText = expenseInput.value;
-    const expenseAmount = parseFloat(expenseInputText);
+// calculate total expenses
+function calculateExpenses() {
     // errors
     const stringError = document.getElementById('string-error');
     const negativeNumberError = document.getElementById('negative-number-error');
     const savingsError = document.getElementById('savings-error');
     const expensesError = document.getElementById('expenses-error');
+    // food input
+    const foodInput = document.getElementById('food-expense');
+    const foodText = foodInput.value;
+    //rent input
+    const rentInput = document.getElementById('rent-expense');
+    const rentText = rentInput.value;
+    // clothes input
+    const clothesInput = document.getElementById('clothes-expense');
+    const clothesText = clothesInput.value;
     // through error
-    if (isNaN(expenseInputText)) {
+    if (isNaN(foodText) || isNaN(rentText) || isNaN(clothesText)) {
         stringError.style.display = 'block';
         negativeNumberError.style.display = 'none';
         savingsError.style.display = 'none';
         expensesError.style.display = 'none';
     }
-    else if (expenseAmount < 0) {
+    else if (foodText < 0 || rentText < 0 || clothesText < 0) {
         stringError.style.display = 'none';
         negativeNumberError.style.display = 'block';
         savingsError.style.display = 'none';
         expensesError.style.display = 'none';
     }
     else {
-        stringError.style.display = 'none';
-        negativeNumberError.style.display = 'none';
-        savingsError.style.display = 'none';
-        expensesError.style.display = 'none';
-        return expenseAmount;
+        const foodAmount = parseFloat(foodText);
+        const rentAmount = parseFloat(rentText);
+        const clothesAmount = parseFloat(clothesText);
+
+        const totalExpenses = document.getElementById('total-expenses');
+        totalExpenses.innerText = foodAmount + rentAmount + clothesAmount;
+        return totalExpenses.innerText;
     }
-
 }
-// calculate total expenses
-function calculateExpenses() {
-    const foodAmount = getInput('food');
-    const rentAmount = getInput('rent');
-    const clothesAmount = getInput('clothes');
-
-    const totalExpenses = document.getElementById('total-expenses');
-    totalExpenses.innerText = foodAmount + rentAmount + clothesAmount;
+// income input
+function incomeInput() {
+    const incomeInput = document.getElementById('income-input');
+    const incomeInputText = incomeInput.value;
+    return incomeInputText;
 }
 // calculate total balance
 function calculateBalance() {
     // income input
-    const incomeInput = document.getElementById('income-input');
-    const incomeInputText = incomeInput.value;
+    const incomeInputText = incomeInput();
     const incomeAmount = parseFloat(incomeInputText);
     // total expense
-    const totalExpenses = document.getElementById('total-expenses');
-    const totalExpensesAmount = totalExpenses.innerText;
-    //  errors
+    const totalExpensesAmount = calculateExpenses();
+    // errors
     const stringError = document.getElementById('string-error');
     const negativeNumberError = document.getElementById('negative-number-error');
     const savingsError = document.getElementById('savings-error');
@@ -74,11 +75,6 @@ function calculateBalance() {
         savingsError.style.display = 'none';
     }
     else {
-        negativeNumberError.style.display = 'none';
-        stringError.style.display = 'none';
-        savingsError.style.display = 'none';
-        expensesError.style.display = 'none';
-        // total balance
         const totalBalance = document.getElementById('total-balance');
         totalBalance.innerText = incomeAmount - totalExpensesAmount;
     }
@@ -86,8 +82,7 @@ function calculateBalance() {
 //calculate savings
 function calculateSavings() {
     // income input
-    const incomeInput = document.getElementById('income-input');
-    const incomeInputText = incomeInput.value;
+    const incomeInputText = incomeInput();
     const incomeAmount = parseFloat(incomeInputText);
     // total balance
     const totalBalance = document.getElementById('total-balance');
